@@ -1,104 +1,134 @@
+<!DOCTYPE html>
 <html lang="en">
+ 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
-    <script src="https://kit.fontawesome.com/dea0a53631.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="main.css">
-    <style>
-         body {
-            background-image:
-        linear-gradient(
-          rgba(0, 0, 0, 0.63),
-          rgba(0, 0, 0, 0.63)
-        ),
-        url("bg.jpg");
-         }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.1/dist/chart.min.js"></script>
+    
 </head>
+<style>
+    body {
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.63),
+                rgba(0, 0, 0, 0.63)),
+            url("bg.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+ 
+    }
+</style>
+ 
 <body>
-    <div class="header">
-        <div class="menu-bar">
-            <nav class="navbar navbar-expand-sm navbar-light">
-                <a href="#" class="navbar-brand">CovidNet</a>
-                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
-                    <i class="fa fa-bars"></i>
-                </button>
-                 <div class="collapse navbar-collapse" id="navbarMenu">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">About</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle " href="#" id="navbadDropdown" data-toggle="dropdown">Resources</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item menu-bar" href="#">Ambulance</a>
-                                <a class="dropdown-item menu-bar" href="#">Oxygen</a>
-                                <a class="dropdown-item menu-bar" href="#">Plasma</a>
-                            </div>
-                        </li>
  
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">News</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Contact Us</a>
-                        </li>
-                    </ul>
-                </div>
  
-                </nav>
+    
+    <div class="wrapper">
+        <nav>
+            <input type="checkbox" id="show-search">
+            <input type="checkbox" id="show-menu">
+            <label for="show-menu" class="menu-icon"><i class="fas fa-bars"></i></label>
+            <div class="content">
+                <div class="logo"><a href="#">CovidNet</a></div>
+                <ul class="links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li>
+                        <a href="#" class="desktop-link">Resources</a>
+                        <input type="checkbox" id="show-features">
+                        <label for="show-features">Features</label>
+                        <ul>
+                            <li><a href="#">Ambulance</a></li>
+                            <li><a href="#">Oxygen</a></li>
+                            <li><a href="#">Plasma</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="desktop-link">News</a>
+                        <input type="checkbox" id="show-services">
+                        <label for="show-services">News</label>
+                    </li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
             </div>
+            <label for="show-search" class="search-icon"><i class="fas fa-search"></i></label>
+            <form action="#" class="search-box">
+                 <input type="text" placeholder="Type Something to Search..." required>
+                <button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right"></i></button>
+            </form>
+        </nav>
     </div>
-
-
-
-    <input id="searchbar" onkeyup="search_district()" type="text"
-        name="search" placeholder="Search Districts">
+  <canvas id="chart" width="800" height="400"></canvas>
+  <script>
+    
+      chartIt();
+      async function chartIt() {
+      const data = await getData();
+      const ctx = document.getElementById('chart').getContext('2d');
+      Chart.defaults.font.size = 16;
       
-   
-    <ol id='list'>
-        <li class="districts">Alipurduar</li>
-        <li class="districts">Bankura</li>
-        <li class="districts">Paschim Bardhaman</li>
-        <li class="districts">Purba Bardhaman</li>
-        <li class="districts">Birbhum</li>
-        <li class="districts">Cooch Behar</li>
-        <li class="districts">Darjeeling</li>
-        <li class="districts">Uttar Dinajpur</li>
-        <li class="districts">Dakshin Dinajpur</li>
-        <li class="districts">Howrah</li>
-        <li class="districts">Jalpaiguri</li>
-        <li class="districts">Jhargram</li>
-        <li class="districts">Kolkata</li>
-        <li class="districts">Kalimpong</li>
-        <li class="districts">Malda</li>
-        <li class="districts">Paschim Medinipur</li>
-        <li class="districts">Purba Medinipur</li>
-        <li class="districts">Murshidabad</li>
-        <li class="districts">Nadia</li>
-        <li class="districts">North 24 Parganas</li>
-        <li class="districts">South 24 Parganas</li>
-        <li class="districts">Purulia</li>
-    </ol>
-      
-    <script src="search.js"></script>
-
-
+      const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.xs,
+            datasets: [{
+            label: 'No. of Covid Affected',
+            data: data.ys,
+            backgroundColor: [
+                'rgba(153, 102, 255, 0.6)',],
+            borderColor: [
+                'rgba(153, 102, 255, 1)',],
+            borderWidth: 1
+         }
+    
+       ]
+     },
+     options: {
+        plugins: {
+            legend: {
+                labels: {
+                    
+                    font: {
+                        size: 14
+                    }
+                }
+            }
+        }
+    }
+     
+   });
+      }
+  
+    async function getData() {
+    const xs =[];
+    const ys =[];
+    const response = await fetch('district_wise.csv');
+    const data = await response.text();
+    
+    const table = data.split('\n').slice(1);
+ 
+    table.forEach(row => {
+ 
+    const columns = row.split(',');
+    const district = columns[3];
+    xs.push(district);
+    const affected = columns[4];
+    ys.push(affected);
+    console.log(district,affected);
+    });
+   return {xs,ys};
+   }
+ 
+ 
+  </script>
+    
+ 
+ 
 </body>
+ 
 </html>
